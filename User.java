@@ -53,20 +53,19 @@
     /** Makes this user follow the given name. If successful, returns true. 
      *  If this user already follows the given name, or if the follows list is full, does nothing and returns false; */
     public boolean addFollowee(String name) {
+        if (fCount==maxfCount){
+            System.out.println("list is full");
+            return false;
+        }
         for (int i=0;i<fCount;i++){
-            if(follows[i]==name){
+            if(follows[i].equals(name)){
                 System.out.println("user already followed");
                 return false;
             }
-            if(follows[i]==null){
-                follows[i]=name;
-                fCount++;
-                System.out.println(this.name +" follows "+name+": " + this.follows(name));
-                return true;
-            }
         }
-        System.out.println("list is full");
-        return false;
+        follows[fCount]=name;
+        fCount++;
+        return true;
     }
 
     /** Removes the given name from the follows list of this user. If successful, returns true.
@@ -76,12 +75,12 @@
         for(int i=0;i<fCount;i++){
             if(follows[i].equals(name)){
                 follows[i]=null;
-                fCount--;
                 bool = true;
-                for(int j=i;j<follows.length-1;j++){
-                    follows[j]=follows[i+1];
-                    follows[j+1]=null;
+                for(int j=i;j<fCount-1;j++){
+                    follows[j]=follows[j+1];
                 }
+                follows[fCount-1]=null;
+                fCount--;
                 System.out.println("user: "+name+" was removed");
                 break;
             }
@@ -109,16 +108,7 @@
     /** Checks is this user is a friend of the other user.
      *  (if two users follow each other, they are said to be "friends.") */
     public boolean isFriendOf(User other) {
-        for(int i=0;i<fCount;i++){
-            if(follows[i].equals(other.name)){
-                for(int j=0;j<other.fCount;j++){
-                    if (other.follows[j].equals(name)){
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
+        return this.follows(other.name)&&other.follows(name);
     }
     /** Returns this user's name, and the names that s/he follows. */
     public String toString() {
