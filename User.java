@@ -54,7 +54,7 @@
      *  If this user already follows the given name, or if the follows list is full, does nothing and returns false; */
     public boolean addFollowee(String name) {
         if (fCount==maxfCount){
-            System.out.println("list is full");
+            //System.out.println("list is full");
             return false;
         }
         for (int i=0;i<fCount;i++){
