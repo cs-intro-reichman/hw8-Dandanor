@@ -66,6 +66,9 @@ public class Network {
         boolean name1exist=false;
         boolean name2exist=false;
         int indexuser1=0;
+        if(name1.equals(name2)){
+            return false;
+        }
         for (int i=0;i<userCount;i++){
             if(users[i].getName().equals(name1)){
                 name1exist=true;
@@ -116,6 +119,9 @@ public class Network {
     public String mostPopularUser() {
         User popular=null;
         int maxfollow=0;
+        if(userCount==0){
+            return null;
+        }
         for(int i=0;i<userCount;i++){
             if(followeeCount(users[i].getName())>maxfollow){
                 maxfollow=followeeCount(users[i].getName());
@@ -130,7 +136,7 @@ public class Network {
     private int followeeCount(String name) {
         int count=0;
         for(int i=0;i<userCount;i++){
-            if(users[i].getName()==name){
+            if(users[i].getName().equals(name)){
                 continue;
             }
             else{
@@ -144,9 +150,9 @@ public class Network {
 
     // Returns a textual description of all the users in this network, and who they follow.
     public String toString() {
-        String str ="";
+        String str ="Network:";
         for(int i=0;i<userCount;i++){
-            str = str +users[i].toString() + "\n";
+            str = str +"\n" +users[i].toString();
         }
        return str;
     }
