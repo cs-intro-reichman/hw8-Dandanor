@@ -66,6 +66,9 @@ public class Network {
         boolean name1exist=false;
         boolean name2exist=false;
         int indexuser1=0;
+        if(name1==null){
+            return false;
+        }
         if(name1.equals(name2)){
             return false;
         }
